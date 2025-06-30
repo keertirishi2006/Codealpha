@@ -1,0 +1,37 @@
+import java.util.*;
+
+public class ChatBot {
+
+    private static Map<String, String> responses = new HashMap<>();
+
+    public static void main(String[] args) {
+        initializeResponses();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("AI Bot: Hello! Ask me anything (type 'bye' to exit)");
+
+        while (true) {
+            System.out.print("You: ");
+            String input = scanner.nextLine().toLowerCase();
+            if (input.equals("bye")) break;
+
+            String reply = getResponse(input);
+            System.out.println("AI Bot: " + reply);
+        }
+    }
+
+    private static void initializeResponses() {
+        responses.put("hi", "Hello!");
+        responses.put("how are you", "I'm doing well, thank you!");
+        responses.put("what is your name", "I am a Java Chatbot.");
+        responses.put("bye", "Goodbye!");
+    }
+
+    private static String getResponse(String input) {
+        for (String keyword : responses.keySet()) {
+            if (input.contains(keyword)) {
+                return responses.get(keyword);
+            }
+        }
+        return "I'm sorry, I don't understand that yet.";
+    }
+}
