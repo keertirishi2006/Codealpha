@@ -1,0 +1,52 @@
+class Stock {
+    String symbol;
+    String name;
+    double price;
+
+    Stock(String symbol, String name, double price) {
+        this.symbol = symbol;
+        this.name = name;
+        this.price = price;
+    }
+}
+
+class User {
+    String username;
+    double balance;
+    HashMap<String, Integer> portfolio;
+
+    User(String username, double balance) {
+        this.username = username;
+        this.balance = balance;
+        this.portfolio = new HashMap<>();
+    }
+
+    void buyStock(Stock stock, int quantity) {
+        double cost = stock.price * quantity;
+        if (balance >= cost) {
+            balance -= cost;
+            portfolio.put(stock.symbol, portfolio.getOrDefault(stock.symbol, 0) + quantity);
+            System.out.println("Bought " + quantity + " shares of " + stock.symbol);
+        } else {
+            System.out.println("Insufficient balance.");
+        }
+    }
+
+    void sellStock(Stock stock, int quantity) {
+        if (portfolio.getOrDefault(stock.symbol, 0) >= quantity) {
+            balance += stock.price * quantity;
+            portfolio.put(stock.symbol, portfolio.get(stock.symbol) - quantity);
+            System.out.println("Sold " + quantity + " shares of " + stock.symbol);
+        } else {
+            System.out.println("Not enough shares to sell.");
+        }
+    }
+
+    void displayPortfolio() {
+        System.out.println("\nPortfolio of " + username);
+        for (String symbol : portfolio.keySet()) {
+            System.out.println(symbol + ": " + portfolio.get(symbol) + " shares");
+        }
+        System.out.printf("Available Balance: ₹%.2f\n", balance);
+    }
+}
